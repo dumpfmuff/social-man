@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/osimono/social-man/cmd/app/server"
+	"github.com/osimono/social-man/cmd/backend/server"
 	"log"
 	"os"
 	"path/filepath"

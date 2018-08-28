@@ -28,3 +28,5 @@ gradle-app.setting
 
 # JetBrains IDEA
 .idea
+
+/ignore
