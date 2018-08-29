@@ -7,6 +7,7 @@ import (
 	"github.com/mongodb/mongo-go-driver/bson"
 	"github.com/mongodb/mongo-go-driver/bson/objectid"
 	"github.com/mongodb/mongo-go-driver/mongo"
+	"github.com/mongodb/mongo-go-driver/mongo/findopt"
 	"github.com/osimono/social-man"
 	"github.com/sirupsen/logrus"
 )
@@ -22,7 +23,7 @@ func NewStorage(c *mongo.Client) Storage {
 }
 
 func (s *Storage) FetchAllTenants() ([]social_man.Tenant, error) {
-	cursor, err := s.tenants.Find(context.Background(), nil)
+	cursor, err := s.tenants.Find(context.Background(), nil, sortBy("lastname", 1))
 	if err != nil {
 		return nil, err
 	}
@@ -45,6 +46,10 @@ func (s *Storage) FetchAllTenants() ([]social_man.Tenant, error) {
 	}
 
 	return clients, nil
+}
+
+func sortBy(fieldName string, order int32) findopt.OptSort {
+	return findopt.Sort(bson.NewDocument(bson.EC.Int32(fieldName, order)))
 }
 
 func (s *Storage) FindTenant(id string) (social_man.Tenant, error) {

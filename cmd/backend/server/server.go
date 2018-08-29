@@ -70,6 +70,12 @@ func indexHandler(entrypoint string) func(w http.ResponseWriter, r *http.Request
 
 func LogWrapper(h http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+
+		// uiuiui
+		/*w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
+		w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+		w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+*/
 		loggingResponseWriter := newLoggingResponseWriter(w)
 		h.ServeHTTP(loggingResponseWriter, r)
 		log.Printf("%v - %v - %v", r.Method, r.URL, loggingResponseWriter.statusCode)
